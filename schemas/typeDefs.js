@@ -10,8 +10,8 @@ const typeDefs = gql`
     }
 
     type Tasks {
-        dateCreated: Date
-        reminderDate: Date
+        dateCreated: String
+        reminderDate: String
         contactFirstName: String
         contactLastName: String
         contactEmail: String
