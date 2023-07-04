@@ -1,21 +1,25 @@
 [
   {
-    "name": "Brian Kernighan",
+    "username": "Brian Kernighan",
     "email": "bkernighan@techfriends.dev",
     "password": "password01"
   },
   {
-    "name": "Max Kanat-Alexander",
+    "username": "Max Kanat-Alexander",
     "email": "mkanatalexander@techfriends.dev",
-    "password": "password02"
+    "password": "password02",
+    "tasks": ["test"]
+
   },
   {
-    "name": "Amiko",
+    "username": "Amiko",
     "email": "amiko@techfriends.dev",
-    "password": "password03"
+    "password": "password03", 
+    "tasks": ["test"]
+
   },
   {
-    "name": "Kent Beck",
+    "username": "Kent Beck",
     "email": "kbeck@techfriends.dev",
     "password": "password04"
   },
