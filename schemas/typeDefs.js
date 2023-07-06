@@ -10,6 +10,7 @@ const typeDefs = gql`
     }
 
     type Tasks {
+        _id: ID!
         dateCreated: String
         reminderDate: String
         contactFirstName: String
@@ -20,9 +21,10 @@ const typeDefs = gql`
     }
 
     type Query {
-        profiles: Profile
+        profiles: [Profile]
         profile(profileId: ID!): Profile
         me: Profile
+        
     }
 `
 
