@@ -9,7 +9,7 @@
     "seed": "node seeders/seed.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "react-rangers",
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^3.6.2",
