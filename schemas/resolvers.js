@@ -20,7 +20,7 @@ const resolvers = {
 
   Mutation: {
     createProfile: async (parent, args) => {
-      const profile = await Profile.create(args); 
+      const profile = await Profile.create(args);
       const token = signToken(profile);
       console.log('token -->', token)
       console.log('profile -->')
@@ -29,7 +29,14 @@ const resolvers = {
 
     createTask: async (parent, args, context) => {
       if (context.user) {
-        const { taskDescription, contactPhone, contactEmail, contactFirstName, contactLastName, reminderDate } = args;
+        const {
+          taskDescription,
+          contactPhone,
+          contactEmail,
+          contactFirstName,
+          contactLastName,
+          reminderDate
+        } = args;
 
         const profile = await Profile.findOne({ _id: context.user._id });
 
