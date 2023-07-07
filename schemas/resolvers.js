@@ -16,6 +16,15 @@ const resolvers = {
     //   }
     //   throw new AuthenticationError('You need to be logged in!');
     // }
+  },
+
+  Mutation: {
+    createProfile: async (parent, args) => {
+      const profile = await Profile.create(args);
+      return profile;
+    },
+
+    //createTask:
   }
 };
 
