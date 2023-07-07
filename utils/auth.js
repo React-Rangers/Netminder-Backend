@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+=======
+// const withAuth = (req, res, next) => {
+//     if (!req.session.userId) {
+//         res.redirect("/login");
+//     } else {
+//         next();
+//     }
+// };
+// module.exports = withAuth;
+
+require('dotenv').config();
+>>>>>>> main
 const jwt = require('jsonwebtoken');
 
 const secret = 'mysecretssshhhhhhh';

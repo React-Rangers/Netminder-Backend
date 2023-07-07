@@ -10,14 +10,12 @@
     "email": "mkanatalexander@techfriends.dev",
     "password": "password02",
     "tasks": []
-
   },
   {
     "username": "Amiko",
     "email": "amiko@techfriends.dev",
-    "password": "password03", 
+    "password": "password03",
     "tasks": []
-
   },
   {
     "username": "Kent Beck",
