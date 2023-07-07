@@ -24,9 +24,35 @@ const resolvers = {
       return profile;
     },
 
-    //createTask:
+    //createTask
+    createTask: async (parent, args, context) => {
+      if (context.user) {
+        const { taskDescription, contactPhone, contactEmail, contactFirstName, contactLastName, reminderDate } = args;
+
+        const profile = await Profile.findOne({ _id: context.user._id });
+
+        if (!profile) {
+          throw new Error('Profile not found');
+        }
+
+        const newTask = {
+          taskDescription,
+          contactPhone,
+          contactEmail,
+          contactFirstName,
+          contactLastName,
+          reminderDate
+        };
+
+        profile.tasks.push(newTask);
+        await profile.save();
+
+        return profile;
+      }
+      throw new AuthenticationError('You need to be logged in!');
+    }
   }
 };
 
-
 module.exports = resolvers;
+
