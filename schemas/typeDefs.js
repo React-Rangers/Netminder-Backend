@@ -24,7 +24,11 @@ const typeDefs = gql`
         profiles: [Profile]
         profile(profileId: ID!): Profile
         me: Profile
-        
+    }
+
+    type Mutation {
+        createProfile(username: String!, email: String!, password: String!): Profile
+        createTask(taskDescription: String!, contactPhone: String, contactEmail: String, contactFirstName: String!, contactLastName: String!, reminderDate: String!): Profile
     }
 `
 
