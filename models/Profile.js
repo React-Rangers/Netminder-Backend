@@ -1,56 +1,55 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-
 const profileSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        match: [/.+@.+\..+/, 'Must match an email address!'],
+        match: [/.+@.+\..+/, 'Must match an email address!']
     },
     password: {
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 5
     },
     tasks: [
         {
             dateCreated: {
                 type: Date,
-                default: Date.now,
+                default: Date.now
             },
             reminderDate: {
                 type: Date,
-                default: Date.now,
+                default: Date.now
             },
             contactFirstName: {
                 type: String,
-                required: true,
+                required: true
             },
             contactLastName: {
                 type: String,
-                required: true,
+                required: true
             },
             contactEmail: {
                 type: String,
-                required: false,
+                required: false
             },
             contactPhone: {
                 type: String,
-                required: false,
+                required: false
             },
-
             taskDescription: {
                 type: String,
-                required: true,
-            },
-        }]
+                required: true
+            }
+        }
+    ]
 });
 
 // set up pre-save middleware to create password
