@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { AuthenticationError } = require('apollo-server-express');
 
 const secret = 'netminder-secret';
 const expiration = '2h';
@@ -28,8 +29,34 @@ module.exports = {
     // return the request object so it can be passed to the resolver as `context`
     return req;
   },
+
   signToken: function ({ email, username, _id }) {
     const payload = { email, username, _id };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
+
+  login: async function (parent, { email, password }) {
+    // Assuming you have a User model or a way to authenticate users
+    const Profile = require('./models/Profile');
+
+    // Find the user based on the provided email
+    const profile = await Profile.findOne({ email });
+
+    if (!profile) {
+      throw new AuthenticationError('Invalid email or password');
+    }
+
+    // Validate the password
+    const isValidPassword = await profile.validatePassword(password);
+
+    if (!isValidPassword) {
+      throw new AuthenticationError('Invalid email or password');
+    }
+
+    // Generate a token
+    const token = this.signToken({ email: profile.email, username: profile.username, _id: profile._id });
+
+    // Return the token as the login result
+    return { token };
   },
 };
