@@ -76,7 +76,7 @@ const resolvers = {
 
       const token = signToken(profile);
       return { token, profile };
-    },
+    }
   }
 };
 
