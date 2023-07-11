@@ -18,6 +18,7 @@ const typeDefs = gql`
         contactEmail: String
         contactPhone: String
         taskDescription: String
+        type: String
     }
 
     type Query {
