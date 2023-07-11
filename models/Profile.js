@@ -19,14 +19,26 @@ const profileSchema = new Schema({
         minlength: 5
     },
     tasks: [
-        {
+        {   
+            type: {
+                type: String,
+                required: false
+            },
+            taskDescription: {
+                type: String,
+                required: true
+            },
+            contactPhone: {
+                type: String,
+                required: false
+            },
             dateCreated: {
                 type: Date,
                 default: Date.now
             },
-            reminderDate: {
-                type: Date,
-                default: Date.now
+            contactEmail: {
+                type: String,
+                required: false
             },
             contactFirstName: {
                 type: String,
@@ -36,18 +48,10 @@ const profileSchema = new Schema({
                 type: String,
                 required: true
             },
-            contactEmail: {
-                type: String,
-                required: false
+            reminderDate: {
+                type: Date,
+                default: Date.now
             },
-            contactPhone: {
-                type: String,
-                required: false
-            },
-            taskDescription: {
-                type: String,
-                required: true
-            }
         }
     ]
 });
