@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const taskSchema = require('./Task');
 
 const profileSchema = new Schema({
     username: {
@@ -18,43 +19,13 @@ const profileSchema = new Schema({
         required: true,
         minlength: 5
     },
-    tasks: [
-        {   
-            type: {
-                type: String,
-                required: false
-            },
-            taskDescription: {
-                type: String,
-                required: true
-            },
-            contactPhone: {
-                type: String,
-                required: false
-            },
-            dateCreated: {
-                type: Date,
-                default: Date.now
-            },
-            contactEmail: {
-                type: String,
-                required: false
-            },
-            contactFirstName: {
-                type: String,
-                required: true
-            },
-            contactLastName: {
-                type: String,
-                required: true
-            },
-            reminderDate: {
-                type: Date,
-                default: Date.now
-            },
+    tasks: [taskSchema],
+},
+    {
+        toJSON: {
+            virtuals: true,
         }
-    ]
-});
+    });
 
 // set up pre-save middleware to create password
 profileSchema.pre('save', async function (next) {
