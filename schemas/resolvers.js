@@ -27,7 +27,7 @@ const resolvers = {
       return { token, profile };
     },
 
-    createTask: async (parent, args, context) => {
+    addTask: async (parent, args, context) => {
       if (context.user) {
         const {
           taskDescription,
