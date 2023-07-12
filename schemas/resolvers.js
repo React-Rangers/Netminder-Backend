@@ -23,7 +23,7 @@ const resolvers = {
       const profile = await Profile.create(args);
       const token = signToken(profile);
       console.log('token -->', token)
-      console.log('profile -->')
+      console.log('profile -->', profile)
       return { token, profile };
     },
 
