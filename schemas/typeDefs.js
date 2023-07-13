@@ -33,7 +33,7 @@ const typeDefs = gql`
 
     type Mutation {
         createProfile(username: String!, email: String!, password: String!): Profile
-        addTask(taskDescription: String!, contactPhone: String, contactEmail: String, contactFirstName: String!, contactLastName: String!, reminderDate: String!): Tasks
+        addTask(taskDescription: String!, contactPhone: String, contactEmail: String, contactFirstName: String!, contactLastName: String!, reminderDate: String!): Profile
         login(email: String!, password: String!): AuthResult
     }
 `

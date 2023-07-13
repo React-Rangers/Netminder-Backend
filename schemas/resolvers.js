@@ -1,6 +1,8 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Profile } = require('../models');
-const { signToken } = require('../utils/auth');
+const { signToken, login } = require('../utils/auth');
+
+
 
 const resolvers = {
   Query: {
@@ -11,8 +13,10 @@ const resolvers = {
     //   return Profile.findOne({ _id: profileId });
     // },
     me: async (parent, args, context) => {
+      console.log('context -> ', context);
+
       if (context.user) {
-        return Profile.findOne({ _id: context.profile._id });
+        return Profile.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     }
@@ -29,6 +33,7 @@ const resolvers = {
 
     // addTask: async (parent, args, context) => {
     //   if (context.profile) {
+    //     console.log('Context is in use!!');
     //     const {
     //       taskDescription,
     //       contactPhone,
@@ -38,7 +43,8 @@ const resolvers = {
     //       reminderDate
     //     } = args;
 
-    //     const profile = await Profile.findOne({ _id: context.profile._id });
+    //     const profile = await Profile.findOne({ _id: context.user._id });
+    //     console.log('profile -> ', profile);
 
     //     if (!profile) {
     //       throw new Error('Profile not found');
@@ -60,20 +66,18 @@ const resolvers = {
     //   }
     //   throw new AuthenticationError('You need to be logged in!');
     // },
-
-    addTask: async (parent, args, context) => {
-      if (context.profile) {
-        await Profile.findOneAndUpdate(
-          { _id: context.profile._id },
-          { $addToSet: { tasks: args } },
-          {
-            new: true
-          }
-        );
-
-        return args;
-      }
-      throw new AuthenticationError('You need to be logged in!');
+    addTask: async (parent, { taskDescription, contactFirstName, contactLastName, reminderDate, contactPhone, contactEmail, }, context) => {
+      console.log('taskDescription -> ', taskDescription);
+      return Profile.findOneAndUpdate(
+        { _id: context.user._id },
+        {
+          $addToSet: { tasks: [{ taskDescription , contactFirstName, contactLastName, reminderDate, contactPhone, contactEmail }]},
+        },
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
     },
 
     login: async (parent, { email, password }) => {
