@@ -1,6 +1,7 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+
     type Profile {
         _id: ID!
         username: String
@@ -29,17 +30,14 @@ const typeDefs = gql`
     }
 
     type AuthResult {
-        token: String
+        token: ID!
+        profile: Profile
     }
 
     type Mutation {
         createProfile(username: String!, email: String!, password: String!): Profile
         addTask(taskDescription: String!, contactPhone: String, contactEmail: String, contactFirstName: String!, contactLastName: String!, reminderDate: String!): Tasks
         login(email: String!, password: String!): AuthResult
-    }
-
-    type AuthResult {
-        token: String
     }
 `
 

@@ -37,7 +37,7 @@ module.exports = {
 
   login: async function (parent, { email, password }) {
     // Assuming you have a User model or a way to authenticate users
-    const Profile = require('./models/Profile');
+    const Profile = require('../models/Profile');
 
     // Find the user based on the provided email
     const profile = await Profile.findOne({ email });
