@@ -30,8 +30,7 @@ const taskSchema = new Schema({
         required: true
     },
     reminderDate: {
-        type: Date,
-        default: Date.now
+        type: String,
     },
 })
 
