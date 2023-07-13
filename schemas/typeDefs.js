@@ -23,10 +23,7 @@ const typeDefs = gql`
     }
 
     type Query {
-        profiles: [Profile]
-        profile(profileId: ID!): Profile
         me: Profile
-        login(email: String!, password: String!): AuthResult
     }
 
     type AuthResult {
