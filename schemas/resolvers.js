@@ -1,18 +1,18 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { Profile } = require('../models');
-const { signToken, login } = require('../utils/auth');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    profiles: async () => {
-      return Profile.find().exec();
-    },
-    profile: async (parent, { profileId }) => {
-      return Profile.findOne({ _id: profileId });
-    },
+    // profiles: async () => {
+    //   return Profile.find().exec();
+    // },
+    // profile: async (parent, { profileId }) => {
+    //   return Profile.findOne({ _id: profileId });
+    // },
     me: async (parent, args, context) => {
       if (context.user) {
-        return Profile.findOne({ _id: context.user._id });
+        return Profile.findOne({ _id: context.profile._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     }
@@ -27,36 +27,51 @@ const resolvers = {
       return { token, profile };
     },
 
+    // addTask: async (parent, args, context) => {
+    //   if (context.profile) {
+    //     const {
+    //       taskDescription,
+    //       contactPhone,
+    //       contactEmail,
+    //       contactFirstName,
+    //       contactLastName,
+    //       reminderDate
+    //     } = args;
+
+    //     const profile = await Profile.findOne({ _id: context.profile._id });
+
+    //     if (!profile) {
+    //       throw new Error('Profile not found');
+    //     }
+
+    //     const newTask = {
+    //       taskDescription,
+    //       contactPhone,
+    //       contactEmail,
+    //       contactFirstName,
+    //       contactLastName,
+    //       reminderDate
+    //     };
+
+    //     profile.tasks.push(newTask);
+    //     await profile.save();
+
+    //     return profile;
+    //   }
+    //   throw new AuthenticationError('You need to be logged in!');
+    // },
+
     addTask: async (parent, args, context) => {
-      if (context.user) {
-        const {
-          taskDescription,
-          contactPhone,
-          contactEmail,
-          contactFirstName,
-          contactLastName,
-          reminderDate
-        } = args;
+      if (context.profile) {
+        await Profile.findOneAndUpdate(
+          { _id: context.profile._id },
+          { $addToSet: { tasks: args } },
+          {
+            new: true
+          }
+        );
 
-        const profile = await Profile.findOne({ _id: context.user._id });
-
-        if (!profile) {
-          throw new Error('Profile not found');
-        }
-
-        const newTask = {
-          taskDescription,
-          contactPhone,
-          contactEmail,
-          contactFirstName,
-          contactLastName,
-          reminderDate
-        };
-
-        profile.tasks.push(newTask);
-        await profile.save();
-
-        return profile;
+        return args;
       }
       throw new AuthenticationError('You need to be logged in!');
     },
