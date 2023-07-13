@@ -6,12 +6,6 @@ const { signToken, login } = require('../utils/auth');
 
 const resolvers = {
   Query: {
-    // profiles: async () => {
-    //   return Profile.find().exec();
-    // },
-    // profile: async (parent, { profileId }) => {
-    //   return Profile.findOne({ _id: profileId });
-    // },
     me: async (parent, args, context) => {
       console.log('context -> ', context);
 
@@ -31,53 +25,22 @@ const resolvers = {
       return { token, profile };
     },
 
-    // addTask: async (parent, args, context) => {
-    //   if (context.profile) {
-    //     console.log('Context is in use!!');
-    //     const {
-    //       taskDescription,
-    //       contactPhone,
-    //       contactEmail,
-    //       contactFirstName,
-    //       contactLastName,
-    //       reminderDate
-    //     } = args;
+    addTask: async (parent, args, context) => {
+      if (context.user) {
+        console.log('Context is in use!!');
 
-    //     const profile = await Profile.findOne({ _id: context.user._id });
-    //     console.log('profile -> ', profile);
+        const profile = await Profile.findOne({ _id: context.user._id });
 
-    //     if (!profile) {
-    //       throw new Error('Profile not found');
-    //     }
-
-    //     const newTask = {
-    //       taskDescription,
-    //       contactPhone,
-    //       contactEmail,
-    //       contactFirstName,
-    //       contactLastName,
-    //       reminderDate
-    //     };
-
-    //     profile.tasks.push(newTask);
-    //     await profile.save();
-
-    //     return profile;
-    //   }
-    //   throw new AuthenticationError('You need to be logged in!');
-    // },
-    addTask: async (parent, { taskDescription, contactFirstName, contactLastName, reminderDate, contactPhone, contactEmail, }, context) => {
-      console.log('taskDescription -> ', taskDescription);
-      return Profile.findOneAndUpdate(
-        { _id: context.user._id },
-        {
-          $addToSet: { tasks: [{ taskDescription , contactFirstName, contactLastName, reminderDate, contactPhone, contactEmail }]},
-        },
-        {
-          new: true,
-          runValidators: true,
+        if (!profile) {
+          throw new Error('Profile not found');
         }
-      );
+
+        profile.tasks.push(args);
+        await profile.save();
+
+        return profile;
+      }
+      throw new AuthenticationError('You need to be logged in!');
     },
 
     login: async (parent, { email, password }) => {
