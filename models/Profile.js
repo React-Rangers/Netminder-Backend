@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
-const bcrypt = require('bcrypt');
-const taskSchema = require('./Task');
+const { Schema, model } = require('mongoose')
+const bcrypt = require('bcrypt')
+const taskSchema = require('./Task')
 
 const profileSchema = new Schema({
     username: {
@@ -25,23 +25,23 @@ const profileSchema = new Schema({
         toJSON: {
             virtuals: true,
         }
-    });
+    })
 
 // set up pre-save middleware to create password
 profileSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
-        const saltRounds = 10;
-        this.password = await bcrypt.hash(this.password, saltRounds);
+        const saltRounds = 10
+        this.password = await bcrypt.hash(this.password, saltRounds)
     }
 
-    next();
-});
+    next()
+})
 
 // compare the incoming password with the hashed password
 profileSchema.methods.isCorrectPassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-};
+    return bcrypt.compare(password, this.password)
+}
 
-const Profile = model('Profile', profileSchema);
+const Profile = model('Profile', profileSchema)
 
-module.exports = Profile;
+module.exports = Profile
