@@ -1,4 +1,4 @@
-const Profile = require('./Profile');
-const Task = require('./Task');
+const Profile = require('./Profile')
+const Task = require('./Task')
 
-module.exports = { Profile, Task };
+module.exports = { Profile, Task }
